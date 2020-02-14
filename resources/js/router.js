@@ -12,6 +12,7 @@ Vue.use(VueRouter);
 
 export default new VueRouter({
     model: 'history',
+    //線上
     base: 'PMS_SPA_test/public',
     // base: 'PMS/public',
     routes: [{

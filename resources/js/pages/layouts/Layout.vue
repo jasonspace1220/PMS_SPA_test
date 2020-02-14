@@ -84,10 +84,10 @@
                     <span>登入</span>
                     </MenuItem>
 
-                    <MenuItem :to="{ name: 'register' }" name="1-2" v-if="!$auth.check()">
-                    <Icon type="fas fa-user-plus"></Icon>
+                    <!-- <MenuItem :to="{ name: 'register' }" name="1-2" v-if="!$auth.check()">
+                    <i class="fas fa-user-plus"></i>
                     <span>註冊</span>
-                    </MenuItem>
+                    </MenuItem> -->
 
                     <MenuItem name="1-3" v-if="$auth.check()" @click.native="$auth.logout()">
                     <Icon type="ios-log-out"></Icon>

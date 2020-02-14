@@ -3164,12 +3164,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var validatePass = function validatePass(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('密碼為必填'));
+      } else {
+        callback();
+      }
+    };
+
+    var validateEmail = function validateEmail(rule, value, callback) {
+      if (value === '' || value.indexOf('@') == -1) {
+        callback(new Error('信箱帳號為必填欄位'));
+      } else {
+        callback();
+      }
+    };
+
     return {
-      email: null,
-      password: null,
-      error: false
+      formCustom: {
+        email: '',
+        passwd: ''
+      },
+      ruleCustom: {
+        email: [{
+          validator: validateEmail,
+          trigger: 'blur'
+        }],
+        passwd: [{
+          validator: validatePass,
+          trigger: 'blur'
+        }]
+      },
+      loading: false
     };
   },
   methods: {
@@ -3177,14 +3219,23 @@ __webpack_require__.r(__webpack_exports__);
       this.login();
     },
     login: function login() {
-      var app = this;
+      this.loading = true;
+      var app = this.formCustom;
       this.$auth.login({
         params: {
           email: app.email,
-          password: app.password
+          password: app.passwd
         },
-        success: function success() {},
-        error: function error() {},
+        success: function success() {
+          this.loading = false;
+        },
+        error: function error() {
+          // this.error = true;
+          this.$Message.error('登入失敗! 信箱帳號或密碼錯誤! ');
+          app.email = '';
+          app.passwd = '';
+          this.loading = false;
+        },
         rememberMe: true,
         redirect: '/dashboard',
         fetchUser: true
@@ -67384,91 +67435,109 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.error
-      ? _c("div", { staticClass: "alert alert-danger" }, [
-          _c("p", [_vm._v("出错了，请检查邮箱/密码是否正确")])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        attrs: { autocomplete: "off", method: "post" },
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.login($event)
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "email" } }, [_vm._v("邮箱")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.email,
-                expression: "email"
-              }
+  return _c(
+    "div",
+    [
+      _c("Row", [_c("br")]),
+      _vm._v(" "),
+      _c(
+        "Row",
+        [
+          _c(
+            "Col",
+            { attrs: { sm: { span: 12, offset: 6 } } },
+            [
+              _c("Card", { staticStyle: { width: "100%" } }, [
+                _c(
+                  "div",
+                  { staticStyle: { "text-align": "center" } },
+                  [
+                    _c("h3", [_vm._v("歡迎光臨Jason的SPA網站練習")]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "Form",
+                      {
+                        ref: "formCustom",
+                        attrs: {
+                          model: _vm.formCustom,
+                          rules: _vm.ruleCustom,
+                          "label-width": 90
+                        }
+                      },
+                      [
+                        _c(
+                          "FormItem",
+                          { attrs: { label: "信箱帳號:", prop: "email" } },
+                          [
+                            _c("Input", {
+                              attrs: { type: "text" },
+                              model: {
+                                value: _vm.formCustom.email,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.formCustom, "email", $$v)
+                                },
+                                expression: "formCustom.email"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "FormItem",
+                          { attrs: { label: "密碼:", prop: "passwd" } },
+                          [
+                            _c("Input", {
+                              attrs: { type: "password" },
+                              model: {
+                                value: _vm.formCustom.passwd,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.formCustom, "passwd", $$v)
+                                },
+                                expression: "formCustom.passwd"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("FormItem")
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "Button",
+                      {
+                        attrs: {
+                          type: "success",
+                          loading: _vm.loading,
+                          ghost: "",
+                          long: ""
+                        },
+                        on: { click: _vm.log }
+                      },
+                      [
+                        !_vm.loading
+                          ? _c("span", [_vm._v("登入")])
+                          : _c("span", [_vm._v("登入中...")])
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ])
             ],
-            staticClass: "form-control",
-            attrs: {
-              type: "email",
-              id: "email",
-              placeholder: "user@example.com",
-              required: ""
-            },
-            domProps: { value: _vm.email },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.email = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "password" } }, [_vm._v("密码")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.password,
-                expression: "password"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "password", id: "password", required: "" },
-            domProps: { value: _vm.password },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.password = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c(
-          "Button",
-          { attrs: { type: "success", ghost: "" }, on: { click: _vm.log } },
-          [_vm._v("登入")]
-        )
-      ],
-      1
-    )
-  ])
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67728,19 +67797,6 @@ var render = function() {
                           _c("Icon", { attrs: { type: "ios-log-in" } }),
                           _vm._v(" "),
                           _c("span", [_vm._v("登入")])
-                        ],
-                        1
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.$auth.check()
-                    ? _c(
-                        "MenuItem",
-                        { attrs: { to: { name: "register" }, name: "1-2" } },
-                        [
-                          _c("Icon", { attrs: { type: "fas fa-user-plus" } }),
-                          _vm._v(" "),
-                          _c("span", [_vm._v("註冊")])
                         ],
                         1
                       )
@@ -83014,8 +83070,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_2___default.a);
-axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'http://jasondemo.cf/PMS_SPA_test/public/api'; // axios.defaults.baseURL = 'http://localhost/PMS/public/api';
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_2___default.a); //線上
+
+axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.baseURL = 'http://jasondemo.cf/PMS_SPA_test/public/api'; //本機
+// axios.defaults.baseURL = 'http://localhost/PMS/public/api';
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.router = _router_js__WEBPACK_IMPORTED_MODULE_6__["default"];
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(__webpack_require__(/*! @websanova/vue-auth */ "./node_modules/@websanova/vue-auth/src/index.js"), {
@@ -83456,6 +83514,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   model: 'history',
+  //線上
   base: 'PMS_SPA_test/public',
   // base: 'PMS/public',
   routes: [{

@@ -15,7 +15,9 @@ import Layout from './pages/layouts/Layout.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+//線上
 axios.defaults.baseURL = 'http://jasondemo.cf/PMS_SPA_test/public/api';
+//本機
 // axios.defaults.baseURL = 'http://localhost/PMS/public/api';
 
 Vue.router = router
