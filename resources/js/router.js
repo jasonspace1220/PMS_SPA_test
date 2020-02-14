@@ -12,7 +12,8 @@ Vue.use(VueRouter);
 
 export default new VueRouter({
     model: 'history',
-    base: 'PMS/public',
+    base: 'PMS_SPA_test/public',
+    // base: 'PMS/public',
     routes: [{
             path: '/',
             name: 'home',
