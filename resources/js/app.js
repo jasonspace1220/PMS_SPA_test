@@ -15,7 +15,8 @@ import Layout from './pages/layouts/Layout.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
-axios.defaults.baseURL = 'http://localhost/PMS/public/api';
+axios.defaults.baseURL = 'http://jasondemo.cf/PMS_SPA_test/public/api';
+// axios.defaults.baseURL = 'http://localhost/PMS/public/api';
 
 Vue.router = router
 Vue.use(require('@websanova/vue-auth'), {
