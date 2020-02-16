@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Dashboard from './components/Dashboard.vue';
-import Home from './components/Home.vue';
-import Register from './components/Register.vue';
-import Login from './components/Login.vue';
+import Dashboard from './pages/Dashboard.vue';
+import Home from './pages/Home.vue';
+import Register from './pages/Register.vue';
+import Login from './pages/Login.vue';
+import Group from './pages/Group.vue';
 
 
 Vue.use(VueRouter);
@@ -43,6 +44,14 @@ export default new VueRouter({
             path: '/dashboard',
             name: 'dashboard',
             component: Dashboard,
+            meta: {
+                auth: true,
+            }
+        },
+        {
+            path: '/group',
+            name: 'group',
+            component: Group,
             meta: {
                 auth: true,
             }

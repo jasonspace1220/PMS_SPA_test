@@ -7,21 +7,28 @@ use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 class AuthController extends Controller
 {
 
     public function register(RegisterFormRequest $request)
     {
-        $user = new User;
-        $user->email = $request->email;
-        $user->name = $request->name;
-        $user->password = bcrypt($request->password);
-        $user->save();
-        return response([
-            'status' => 'success',
-            'data' => $user,
-        ], 200);
+        try {
+            $user = new User;
+            $user->email = $request->email;
+            $user->name = $request->name;
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return response([
+                'status' => 'success',
+                'data' => $user,
+            ], 200);
+        } catch (JWTException  $e) {
+            dd($e);
+        }
+
     }
 
     public function login(Request $request)

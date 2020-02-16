@@ -16,10 +16,6 @@
                         <FormItem label="密碼:" prop="passwd">
                             <Input type="password" v-model="formCustom.passwd"></Input>
                         </FormItem>
-                        <FormItem>
-                            <!-- <Button type="primary" @click="log">登入</Button> -->
-
-                        </FormItem>
                     </Form>
                     <Button type="success" :loading="loading" @click="log" ghost long>
                         <span v-if="!loading">登入</span>
