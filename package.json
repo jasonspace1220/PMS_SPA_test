@@ -20,7 +20,7 @@
     },
     "dependencies": {
         "@websanova/vue-auth": "^2.21.16-beta",
-        "html-webpack-plugin": "^3.2.0",
+        "html-webpack-plugin": "^5.5.0",
         "view-design": "^4.1.2",
         "vue": "^2.6.11",
         "vue-axios": "^2.1.5",
